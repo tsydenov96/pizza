@@ -7,8 +7,9 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
+use yii\web\NotFoundHttpException;
+use app\models\User;
+use app\models\Goods;
 
 class SiteController extends Controller
 {
@@ -61,7 +62,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $goods = Goods::find()->all();
+        return $this->render('index',['goods' => $goods]);
     }
 
     /**
@@ -69,15 +71,43 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
+    //авторизация
     public function actionLogin()
     {
+        $session = Yii::$app->session;
+        $session->open();
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        $model = new User();
+        if ($model->load(Yii::$app->request->post())) {
+
+            $user = User::find()->where(['username' => $model->username,'password' => $model->password])->one();
+            if($user)
+
+            {                    
+                Yii::$app->user->login($user);
+                switch ($user->status) {
+                    case '1':
+                        $_SESSION['status']='admin';
+                        break;
+                    case '2':
+                        $_SESSION['status']='operator';
+                        break;
+                    case '3':
+                        $_SESSION['status']='carrier';
+                        break;
+                    case '4':
+                        $_SESSION['status']='cook';
+                        break;    
+                }
+                return $this->goBack();
+            }
+            else
+            {
+                $model->addError($attribute='password', 'Incorrect username or password.');
+            }
         }
         return $this->render('login', [
             'model' => $model,
@@ -94,33 +124,5 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
     }
 }

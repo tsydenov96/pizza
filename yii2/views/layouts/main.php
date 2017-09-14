@@ -27,8 +27,10 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
+    $session = Yii::$app->session;
+    $session->open();
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Пиццерия',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -38,22 +40,70 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
+            ['label' => 'Корзина', 'url' => ['/site/shopping-cart']]
+        ],
+    ]);
+    if(Yii::$app->user->isGuest){
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => [
                 ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
+            ]
+        ]);
+    }
+    else{
+        $status =isset($_SESSION['status']) ? $_SESSION['status'] : 'null';
+        switch ($status) {
+            case 'admin':
+                echo Nav::widget([
+                    'options' => ['class' => 'navbar-nav navbar-right'],
+                    'items' => [
+                        ['label' => 'admin', 'url' => ['/admin']]
+                    ]
+                ]); 
+                break;
+            case 'operator':
+                echo Nav::widget([
+                    'options' => ['class' => 'navbar-nav navbar-right'],
+                    'items' => [
+                        ['label' => 'operator', 'url' => ['/operator']]
+                    ]
+                ]);
+                break;
+            case 'carrier':
+                echo Nav::widget([
+                    'options' => ['class' => 'navbar-nav navbar-right'],
+                    'items' => [
+                        ['label' => 'carrier', 'url' => ['/carrier']]
+                    ]
+                ]);
+                break;
+            case 'cook':
+                echo Nav::widget([
+                    'options' => ['class' => 'navbar-nav navbar-right'],
+                    'items' => [
+                        ['label' => 'cook', 'url' => ['/cook']]
+                    ]
+                ]);
+                break;
+            case 'null':
+                #error;
+                break;
+        }
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => [
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    'Выйти (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
                 . '</li>'
-            )
-        ],
-    ]);
+            ]
+        ]);
+    }
     NavBar::end();
     ?>
 
