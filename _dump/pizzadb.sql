@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Сен 12 2017 г., 13:55
+-- Время создания: Сен 14 2017 г., 11:21
 -- Версия сервера: 10.1.16-MariaDB
 -- Версия PHP: 5.6.24
 
@@ -47,8 +47,8 @@ CREATE TABLE `orders` (
   `user_patronymic` varchar(255) NOT NULL,
   `user_address` varchar(255) NOT NULL,
   `user_phone` int(11) NOT NULL,
-  `operator_id` int(11) DEFAULT NULL,
-  `curier_id` int(11) NOT NULL,
+  `operator_id` int(11) DEFAULT '0',
+  `carrier_id` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `order_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -76,7 +76,7 @@ CREATE TABLE `orders_connect` (
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `password` varchar(32) NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
