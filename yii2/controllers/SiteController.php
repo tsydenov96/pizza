@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use app\models\User;
 use app\models\Goods;
+use yii\base\Model;
 
 class SiteController extends Controller
 {
@@ -124,5 +125,47 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionShoppingCart()
+    {
+        if(count($_SESSION['id'])){
+            $allGoods = array();
+            foreach($_SESSION['id'] as $id){
+                $goods = Goods::find()->where(['goods_id' => $id])->one();
+                $allGoods[] = $goods;
+            }
+            return $this->render('shoppingCart',['goods' => $allGoods]);
+        }
+        else{
+            return $this->goBack();
+        }
+    }
+
+    public function actionDeleteGoods($id){
+        $key = array_search($id, $_SESSION['id']);
+        unset($_SESSION['id'][$key]);
+        return $this->redirect(['shopping-cart']);
+    }
+
+    public function actionCountGoods($id){
+        #code...
+    }
+
+    public function actionChooseGoods(){
+            $id = Yii::$app->request->post('goods_id');
+            $_SESSION['id'][]=$id; 
+            $_SESSION['id'] = array_unique($_SESSION['id']);
+            return $this->goBack();
+    }
+
+    public function actionBookingCreate(){
+        $model = new Booking();
+        if (Yii::$app->request->isPost&&$model->load(Yii::$app->request->post()))
+            {
+                
+                return $this->redirect(['index']);
+            }
+        return $this->render('create', ['model' => $model]);
     }
 }

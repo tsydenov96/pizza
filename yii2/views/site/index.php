@@ -22,7 +22,11 @@ $this->title = 'My Yii Application';
                     <br>
                     <?= Html::encode ("{$goods->goods_name}") ?><br>
                     <?= Html::encode ("{$goods->goods_price}") ?><br>
-                    <button>В корзину</button>
+                    <form action="index.php?r=site/choose-goods" method="POST">
+                        <input type="hidden" name="goods_id" value="<?=$goods->goods_id;?>">
+                        <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
+                        <button type="submit">В корзину</button>
+                    </form>
                 </div>
 
             <?php
