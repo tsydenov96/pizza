@@ -128,14 +128,19 @@ class SiteController extends Controller
     }
 
     public function actionShoppingCart()
-    {
-        if(count($_SESSION['id'])){
-            $allGoods = array();
-            foreach($_SESSION['id'] as $id){
-                $goods = Goods::find()->where(['goods_id' => $id])->one();
-                $allGoods[] = $goods;
+    {        
+        if($_SESSION['id']){
+            if(count($_SESSION['id'])){
+                $allGoods = array();
+                foreach($_SESSION['id'] as $id){
+                    $goods = Goods::find()->where(['goods_id' => $id])->one();
+                    $allGoods[] = $goods;
+                }
+                return $this->render('shoppingCart',['goods' => $allGoods]);
             }
-            return $this->render('shoppingCart',['goods' => $allGoods]);
+            else{
+                return $this->goBack();
+            }
         }
         else{
             return $this->goBack();

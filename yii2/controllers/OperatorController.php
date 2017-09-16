@@ -7,6 +7,10 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\data\Pagination;
 use yii\filters\VerbFilter;
+use app\models\Operator;
+use app\models\Booking;
+use app\models\BookingSearch;
+
 
 class OperatorController extends Controller
 {
@@ -38,7 +42,13 @@ public function behaviors() {
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new BookingSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
 }

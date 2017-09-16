@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Pizza store';
 ?>
 <div class="site-index">
 
@@ -14,7 +14,7 @@ $this->title = 'My Yii Application';
 
         <div class="row">
             <?php
-                foreach ($goods as $goods):               
+                foreach ($goods as $goods):
             ?>
             
                 <div class="col-md-4">
