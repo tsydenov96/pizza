@@ -12,7 +12,7 @@ class BookingConnect extends \yii\db\ActiveRecord
 public function rules()
     {
         return [
-            [['booking_id','goods_id','booking_connect_quantity','booking_connect_cook_id','booking_connect_status'], 'required'],
+            [['booking_id','goods_id','booking_connect_quantity','booking_connect_status'], 'required'],
         ];
     }
 }

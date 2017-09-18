@@ -10,6 +10,9 @@ use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use app\models\User;
 use app\models\Goods;
+use app\models\GoodsInBasket;
+use app\models\Booking;
+use app\models\BookingConnect;
 use yii\base\Model;
 
 class SiteController extends Controller
@@ -126,15 +129,14 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
-
     public function actionShoppingCart()
     {        
-        if($_SESSION['id']){
+        if(isset($_SESSION['id'])){
             if(count($_SESSION['id'])){
                 $allGoods = array();
                 foreach($_SESSION['id'] as $id){
-                    $goods = Goods::find()->where(['goods_id' => $id])->one();
-                    $allGoods[] = $goods;
+                    $goods = Goods::find()->where(['goods_id' => $id->id])->one();
+                    $allGoods[] = [$goods , $id->count];
                 }
                 return $this->render('shoppingCart',['goods' => $allGoods]);
             }
@@ -153,23 +155,64 @@ class SiteController extends Controller
         return $this->redirect(['shopping-cart']);
     }
 
-    public function actionCountGoods($id){
-        #code...
+    public function actionCountGoods($do,$id){
+        for($i = 0;$i<count($_SESSION['id']);$i++){
+            if($_SESSION['id'][$i]->id == $id)
+                break;
+        }
+        if($do==1){
+            if($_SESSION['id'][$i]->count!=1)
+                $_SESSION['id'][$i]->count--;
+        }
+        else{
+            $_SESSION['id'][$i]->count++;
+        }
+        return $this->redirect(['shopping-cart']);
     }
 
     public function actionChooseGoods(){
             $id = Yii::$app->request->post('goods_id');
-            $_SESSION['id'][]=$id; 
-            $_SESSION['id'] = array_unique($_SESSION['id']);
+            if(isset($_SESSION['id'])){
+                if(count($_SESSION['id'])!=0){
+                    $i=0;
+                    while($i<count($_SESSION['id'])&&$_SESSION['id'][$i]->id!=$id){
+                        $i++;
+                    }
+                    if($i==count($_SESSION['id']))
+                        $_SESSION['id'][] = new GoodsInBasket($id);
+                }
+                else{
+                    $_SESSION['id'][]=new GoodsInBasket($id);
+                }
+            }
+            else{
+                $_SESSION['id'][]=new GoodsInBasket($id);
+            }
+                       
             return $this->goBack();
+    }
+
+    public function clear(){
+        unset($_SESSION['id']);
+        return $this->redirect(['index']);
     }
 
     public function actionBookingCreate(){
         $model = new Booking();
         if (Yii::$app->request->isPost&&$model->load(Yii::$app->request->post()))
             {
-                
-                return $this->redirect(['index']);
+                $model->booking_status = 1;
+                $model->booking_date = date('Y-m-d H:i');
+                $model->save();
+                for($i = 0;$i<count($_SESSION['id']);$i++){
+                    $bookingCon = new BookingConnect();
+                    $bookingCon->booking_id = $model->booking_id;   
+                    $bookingCon->goods_id = $_SESSION['id'][$i]->id;
+                    $bookingCon->booking_connect_quantity = $_SESSION['id'][$i]->count;
+                    $bookingCon->booking_connect_status = 1;
+                    $bookingCon->save();
+                }
+                $this->clear();
             }
         return $this->render('create', ['model' => $model]);
     }
