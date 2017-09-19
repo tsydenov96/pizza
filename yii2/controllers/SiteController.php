@@ -89,7 +89,6 @@ class SiteController extends Controller
 
             $user = User::find()->where(['username' => $model->username,'password' => $model->password])->one();
             if($user)
-
             {                    
                 Yii::$app->user->login($user);
                 switch ($user->status) {
@@ -199,21 +198,40 @@ class SiteController extends Controller
 
     public function actionBookingCreate(){
         $model = new Booking();
+        $model2 = new BookingConnect();
         if (Yii::$app->request->isPost&&$model->load(Yii::$app->request->post()))
-            {
-                $model->booking_status = 1;
-                $model->booking_date = date('Y-m-d H:i');
-                $model->save();
-                for($i = 0;$i<count($_SESSION['id']);$i++){
-                    $bookingCon = new BookingConnect();
-                    $bookingCon->booking_id = $model->booking_id;   
-                    $bookingCon->goods_id = $_SESSION['id'][$i]->id;
-                    $bookingCon->booking_connect_quantity = $_SESSION['id'][$i]->count;
-                    $bookingCon->booking_connect_status = 1;
-                    $bookingCon->save();
+        {
+            if(isset($_SESSION['status'])){
+                switch ($_SESSION['__id']) {
+                    case '2':
+                    $model->operator_id=$_SESSION['__id'];
+                    $model->booking_status = 2;
+                    break;
+                    case '3':
+                    $model->carrier_id=$_SESSION['__id'];
+                    $model->booking_status = 4;
+                    break;
+                    case '4':
+                    $model2->booking_connect_cook_id=$_SESSION['__id'];
+                    $model->booking_status = 3;
+                    break;
                 }
-                $this->clear();
+                if(!$model->booking_status){
+                    $model->booking_status = 1;
+                }
             }
+            $model->booking_date = date('Y-m-d H:i');
+            $model->save();
+            for($i = 0;$i<count($_SESSION['id']);$i++){
+                $bookingCon = new BookingConnect();
+                $bookingCon->booking_id = $model->booking_id;   
+                $bookingCon->goods_id = $_SESSION['id'][$i]->id;
+                $bookingCon->booking_connect_quantity = $_SESSION['id'][$i]->count;
+                $bookingCon->booking_connect_status = 1;
+                $bookingCon->save();
+            }
+            $this->clear();
+        }
         return $this->render('create', ['model' => $model]);
     }
 }

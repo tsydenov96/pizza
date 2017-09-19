@@ -3,7 +3,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-
+$url='view';
 $this->title = Yii::t('app', 'Operator');
 ?>
 
@@ -23,6 +23,7 @@ $this->title = Yii::t('app', 'Operator');
             'carrier_id',
             'booking_status',
             'booking_date',
+            'operator_id',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header'=>'Действия', 
