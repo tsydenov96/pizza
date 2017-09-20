@@ -17,6 +17,9 @@ use Yii;
  * @property integer $carrier_id
  * @property integer $booking_status
  * @property string $booking_date
+ *
+ * @property BookingConnect[] $bookingConnects
+ * @property Goods[] $goods
  */
 class Booking extends \yii\db\ActiveRecord
 {
@@ -34,7 +37,7 @@ class Booking extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_surname', 'user_name', 'user_patronymic', 'user_address', 'user_phone', 'booking_status', 'booking_date'], 'required'],
+            [['user_surname', 'user_name', 'user_patronymic', 'user_address', 'user_phone', 'carrier_id', 'booking_status', 'booking_date'], 'required'],
             [['user_phone', 'operator_id', 'carrier_id', 'booking_status'], 'integer'],
             [['booking_date'], 'safe'],
             [['user_surname', 'user_name', 'user_patronymic', 'user_address'], 'string', 'max' => 255],
@@ -58,5 +61,21 @@ class Booking extends \yii\db\ActiveRecord
             'booking_status' => 'Booking Status',
             'booking_date' => 'Booking Date',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBookingConnects()
+    {
+        return $this->hasMany(BookingConnect::className(), ['booking_id' => 'booking_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGoods()
+    {
+        return $this->hasMany(Goods::className(), ['goods_id' => 'goods_id'])->viaTable('booking_connect', ['booking_id' => 'booking_id']);
     }
 }

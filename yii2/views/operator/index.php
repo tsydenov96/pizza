@@ -1,13 +1,15 @@
 <?php
+
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use app\models\Bookink;
 /* @var $this yii\web\View */
-$url='view';
+//$url='view';
 $this->title = Yii::t('app', 'Operator');
 ?>
 
-<div class="operator-index">
+<div class="booking-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -26,15 +28,16 @@ $this->title = Yii::t('app', 'Operator');
             'operator_id',
             [
                 'class' => 'yii\grid\ActionColumn',
+                'controller' => 'operator',
                 'header'=>'Действия', 
-                'template' => '{link}',
+                'template' => '{view}',
                 'buttons' => [
-                    'update' => function ($url,$model) {
-                    return Html::a(
-                    '<span class="glyphicon glyphicon-screenshot"></span>', 
-                    $url);
-                },
-                'link' => function ($url,$model) {
+                //     'update' => function ($url,$model) {
+                //     return Html::a(
+                //     '<span class="glyphicon glyphicon-screenshot"></span>', 
+                //     $url);
+                // },
+                'view' => function ($url,$model) {
                     return Html::a('To accept', $url);
                 },
                 ],

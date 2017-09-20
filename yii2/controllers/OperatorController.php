@@ -7,7 +7,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\data\Pagination;
 use yii\filters\VerbFilter;
-use app\models\Operator;
 use app\models\Booking;
 use app\models\BookingSearch;
 
@@ -50,5 +49,20 @@ public function behaviors() {
             'dataProvider' => $dataProvider,
         ]);
     }
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }    
+    protected function findModel($id)
+    {
+        if (($model = Booking::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
 
 }

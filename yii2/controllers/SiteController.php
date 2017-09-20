@@ -216,9 +216,9 @@ class SiteController extends Controller
                     $model->booking_status = 3;
                     break;
                 }
-                if(!$model->booking_status){
-                    $model->booking_status = 1;
-                }
+            }
+            if(!$model->booking_status){
+                $model->booking_status = 1;
             }
             $model->booking_date = date('Y-m-d H:i');
             $model->save();
