@@ -18,7 +18,7 @@ $this->title = 'Pizza store';
             ?>
             
                 <div class="col-md-4">
-                    <img src="<?='/pizza/yii2/upload/'.$goods->goods_img?>" width="300" height="300" class="img-rounded" alt="111">
+                    <img src="<?='/pizza/yii2/upload/'.$goods->goods_img?>" width="300" height="250" class="img-rounded" alt="111">
                     <br>
                     <?= Html::encode ("{$goods->goods_name}") ?><br>
                     <?= Html::encode ("{$goods->goods_price}") ?><br>

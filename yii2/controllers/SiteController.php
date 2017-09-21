@@ -198,7 +198,6 @@ class SiteController extends Controller
 
     public function actionBookingCreate(){
         $model = new Booking();
-        $model2 = new BookingConnect();
         if (Yii::$app->request->isPost&&$model->load(Yii::$app->request->post()))
         {
             if(isset($_SESSION['status'])){
@@ -209,9 +208,8 @@ class SiteController extends Controller
                     break;
                 }
             }
-            if(!$model->booking_status){
+            if($model->booking_status != 2)
                 $model->booking_status = 1;
-            }
             $model->booking_date = date('Y-m-d H:i');
             $model->save();
             for($i = 0;$i<count($_SESSION['id']);$i++){

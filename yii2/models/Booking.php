@@ -37,7 +37,7 @@ class Booking extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_surname', 'user_name', 'user_patronymic', 'user_address', 'user_phone', 'carrier_id', 'booking_status', 'booking_date'], 'required'],
+            [['user_surname', 'user_name', 'user_patronymic', 'user_address', 'user_phone', 'booking_status', 'booking_date'], 'required'],
             [['user_phone', 'operator_id', 'carrier_id', 'booking_status'], 'integer'],
             [['booking_date'], 'safe'],
             [['user_surname', 'user_name', 'user_patronymic', 'user_address'], 'string', 'max' => 255],
