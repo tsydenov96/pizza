@@ -78,4 +78,12 @@ class Booking extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Goods::className(), ['goods_id' => 'goods_id'])->viaTable('booking_connect', ['booking_id' => 'booking_id']);
     }
+
+    public function getCarrier(){
+        return $this->hasOne(User::className(), ['user_id' => 'carrier_id']);
+    }
+
+    public function getOperator(){
+        return $this->hasOne(User::className(), ['user_id' => 'operator_id']);
+    }
 }

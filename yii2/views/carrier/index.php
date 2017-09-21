@@ -6,7 +6,7 @@ use yii\widgets\Pjax;
 use app\models\Bookink;
 /* @var $this yii\web\View */
 //$url='view';
-$this->title = Yii::t('app', 'Operator');
+$this->title = Yii::t('app', 'Carrier');
 ?>
 
 <div class="booking-index">
@@ -32,9 +32,9 @@ $this->title = Yii::t('app', 'Operator');
         'operator.username',
         [
             'class' => 'yii\grid\ActionColumn',
-            'controller' => 'operator',
+            'controller' => 'carrier',
             'header'=>'Действия', 
-            'template' => '{accept} {remove}',
+            'template' => '{accept} {delivery}',
             'buttons' => [
                 //     'update' => function ($url,$model) {
                 //     return Html::a(
@@ -42,13 +42,13 @@ $this->title = Yii::t('app', 'Operator');
                 //     $url);
                 // },
                 'accept' => function ($url,$model) {
-                    return Html::a('<span class="glyphicon glyphicon-ok"></span>', $url);
+                    return Html::a('<span class="glyphicon glyphicon-plus"></span>', $url);
                 },
-                'remove' => function ($url,$model) {
-                    return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url);
+                'delivery' => function ($url,$model) {
+                    return Html::a('<span class="glyphicon glyphicon-ok"></span>', $url);
                 },
             ],
         ],
     ],
 ]); 
-    ?>
+?>
