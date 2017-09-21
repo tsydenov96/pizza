@@ -51,15 +51,15 @@ class Booking extends \yii\db\ActiveRecord
     {
         return [
             'booking_id' => 'Booking ID',
-            'user_surname' => 'User Surname',
-            'user_name' => 'User Name',
-            'user_patronymic' => 'User Patronymic',
-            'user_address' => 'User Address',
-            'user_phone' => 'User Phone',
+            'user_surname' => 'Фамилия',
+            'user_name' => 'Имя',
+            'user_patronymic' => 'Отчество',
+            'user_address' => 'Адрес',
+            'user_phone' => 'Телефон',
             'operator_id' => 'Operator ID',
             'carrier_id' => 'Carrier ID',
-            'booking_status' => 'Booking Status',
-            'booking_date' => 'Booking Date',
+            'booking_status' => 'Статус',
+            'booking_date' => 'Время',
         ];
     }
 

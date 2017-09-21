@@ -20,12 +20,12 @@ $this->title = Yii::t('app', 'Operator');
             ['class' => 'yii\grid\SerialColumn'],
             //'booking_id',
             'user_name',
+            'user_surname',
+            'user_patronymic',
             'user_address',
             'user_phone',
-            'carrier_id',
             'booking_status',
             'booking_date',
-            'operator_id',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'controller' => 'operator',
@@ -48,3 +48,4 @@ $this->title = Yii::t('app', 'Operator');
         ],
     ]); 
     ?>
+</div>
