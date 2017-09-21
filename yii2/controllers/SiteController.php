@@ -202,18 +202,10 @@ class SiteController extends Controller
         if (Yii::$app->request->isPost&&$model->load(Yii::$app->request->post()))
         {
             if(isset($_SESSION['status'])){
-                switch ($_SESSION['__id']) {
-                    case '2':
+                switch ($_SESSION['status']) {
+                    case 'operator':
                     $model->operator_id=$_SESSION['__id'];
                     $model->booking_status = 2;
-                    break;
-                    case '3':
-                    $model->carrier_id=$_SESSION['__id'];
-                    $model->booking_status = 4;
-                    break;
-                    case '4':
-                    $model2->booking_connect_cook_id=$_SESSION['__id'];
-                    $model->booking_status = 3;
                     break;
                 }
             }

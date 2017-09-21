@@ -22,7 +22,7 @@ public function behaviors() {
         'access' => [ 'class' => AccessControl::className(), 
         'rules' => 
         [ 
-        [   'actions' => ['index'], 
+        [   'actions' => ['index','accept','remove'], 
         'allow' => true,
         'matchCallback' => function ($rule, $action) {
                             $status =isset($_SESSION['status']) ? $_SESSION['status'] : null;
@@ -49,12 +49,24 @@ public function behaviors() {
             'dataProvider' => $dataProvider,
         ]);
     }
-    public function actionView($id)
+    public function actionAccept($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }    
+        $model = $this->findModel($id);
+        $model->operator_id = $_SESSION['__id'];
+        $model->booking_status = 2; // 2 - принят
+        $model->save();
+        return $this->redirect(['index']);
+    }  
+
+    public function actionRemove($id)
+    {
+        $model = $this->findModel($id);
+        $model->operator_id = $_SESSION['__id'];
+        $model->booking_status = 3; // 3 - не принят
+        $model->save();
+        return $this->redirect(['index']);
+    }   
+
     protected function findModel($id)
     {
         if (($model = Booking::findOne($id)) !== null) {

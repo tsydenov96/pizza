@@ -30,15 +30,18 @@ $this->title = Yii::t('app', 'Operator');
                 'class' => 'yii\grid\ActionColumn',
                 'controller' => 'operator',
                 'header'=>'Действия', 
-                'template' => '{view}',
+                'template' => '{accept} {remove}',
                 'buttons' => [
                 //     'update' => function ($url,$model) {
                 //     return Html::a(
                 //     '<span class="glyphicon glyphicon-screenshot"></span>', 
                 //     $url);
                 // },
-                'view' => function ($url,$model) {
-                    return Html::a('To accept', $url);
+                'accept' => function ($url,$model) {
+                    return Html::a('<span class="glyphicon glyphicon-ok"></span>', $url);
+                },
+                'remove' => function ($url,$model) {
+                    return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url);
                 },
                 ],
             ],
