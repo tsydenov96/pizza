@@ -149,8 +149,12 @@ class SiteController extends Controller
     }
 
     public function actionDeleteGoods($id){
-        $key = array_search($id, $_SESSION['id']);
-        unset($_SESSION['id'][$key]);
+        for($i = 0;$i<count($_SESSION['id']);$i++){
+            if($_SESSION['id'][$i]->id == $id){
+                unset($_SESSION['id'][$i]);
+                break;
+            }
+        }
         return $this->redirect(['shopping-cart']);
     }
 

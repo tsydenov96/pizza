@@ -6,12 +6,9 @@ use app\models\Goods;
 $this->title = 'Cook Panel';
 ?>
 
-<h1 align="center">Admin</h1>
+<h1 align="center">Cook</h1>
 
 <br>
-<p>	
-	<a href="index.php?r=admin/create"> <button class="bttn-unite bttn-md bttn-danger">Создать</button></a>        
-    </p>
 <table class="table table-striped table-bordered">
 <thead>
 <tr>
@@ -28,7 +25,7 @@ for($j=0;$j<$key->booking_connect_quantity;$j++):
 ?>
 
 	    <tr>
-            <th><?=++$i?></th>
+            <th><?=$i++?></th>
             <th><p><?php $name = Goods::find()->where(['goods_id' => $key->goods_id])->one(); echo $name->goods_name;?></p> </th>
             <?php switch($key->booking_connect_status){
                     case '1' : $status = 'Не принято'; break;
