@@ -26,7 +26,7 @@ $this->title = Yii::t('app', 'Operator');
         'user_name',
         'user_address',
         'user_phone',
-        'carrier.username',
+        //'carrier.username',
         'booking_status',
         'booking_date',
         'operator.username',
