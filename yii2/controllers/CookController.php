@@ -49,6 +49,13 @@ public function behaviors() {
         return $this->redirect(['index']);
     }
 
+    public function actionReady($id_booking, $id_goods){
+        $model = $this->findModel($id_booking, $id_goods);
+        $model->booking_connect_cook_id = $_SESSION['__id'];
+        $model->booking_connect_status = 3; // 2 - готово
+        $model->save();
+        return $this->redirect(['index']);
+    }
 
     protected function findModel($id_booking, $id_goods)
     {

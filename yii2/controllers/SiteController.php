@@ -151,7 +151,7 @@ class SiteController extends Controller
     public function actionDeleteGoods($id){
         for($i = 0;$i<count($_SESSION['id']);$i++){
             if($_SESSION['id'][$i]->id == $id){
-                unset($_SESSION['id'][$i]);
+                array_splice($_SESSION['id'], $i, 1);
                 break;
             }
         }
@@ -216,13 +216,14 @@ class SiteController extends Controller
                 $model->booking_status = 1;
             $model->booking_date = date('Y-m-d H:i');
             $model->save();
-            for($i = 0;$i<count($_SESSION['id']);$i++){
-                $bookingCon = new BookingConnect();
-                $bookingCon->booking_id = $model->booking_id;   
-                $bookingCon->goods_id = $_SESSION['id'][$i]->id;
-                $bookingCon->booking_connect_quantity = $_SESSION['id'][$i]->count;
-                $bookingCon->booking_connect_status = 1;
-                $bookingCon->save();
+            for($i = 0; $i<count($_SESSION['id']);$i++){
+                for($j = 0; $j < $_SESSION['id'][$i]->count;$j++){
+                    $bookingCon = new BookingConnect();
+                    $bookingCon->booking_id = $model->booking_id;   
+                    $bookingCon->goods_id = $_SESSION['id'][$i]->id;
+                    $bookingCon->booking_connect_status = 1;
+                    $bookingCon->save();
+                }
             }
             $this->clear();
         }
