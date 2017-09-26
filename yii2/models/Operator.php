@@ -26,14 +26,6 @@ class Operator extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
-        return 'booking';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [

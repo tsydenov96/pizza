@@ -21,14 +21,6 @@ class BookingConnect extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
-        return 'booking_connect';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
