@@ -20,7 +20,7 @@ public function behaviors() {
         'access' => [ 'class' => AccessControl::className(), 
         'rules' => 
         [ 
-        [   'actions' => ['index','accept'], 
+        [   'actions' => ['index','accept','ready'], 
         'allow' => true,
         'matchCallback' => function ($rule, $action) {
                             $status =isset($_SESSION['status']) ? $_SESSION['status'] : null;
@@ -41,25 +41,25 @@ public function behaviors() {
         return $this->render('index',['goods'=>$goods]);
     }
 
-    public function actionAccept($id_booking, $id_goods){
-        $model = $this->findModel($id_booking, $id_goods);
+    public function actionAccept($id){
+        $model = $this->findModel($id);
         $model->booking_connect_cook_id = $_SESSION['__id'];
         $model->booking_connect_status = 2; // 2 - принят
         $model->save();
         return $this->redirect(['index']);
     }
 
-    public function actionReady($id_booking, $id_goods){
-        $model = $this->findModel($id_booking, $id_goods);
+    public function actionReady($id){
+        $model = $this->findModel($id);
         $model->booking_connect_cook_id = $_SESSION['__id'];
         $model->booking_connect_status = 3; // 2 - готово
         $model->save();
         return $this->redirect(['index']);
     }
 
-    protected function findModel($id_booking, $id_goods)
+    protected function findModel($id)
     {
-        if (($model = BookingConnect::find()->where(['booking_id' => $id_booking])->andWhere(['goods_id'=>$id_goods])->one()) !== null) {
+        if (($model = BookingConnect::find()->where(['booking_connect_id' => $id])->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

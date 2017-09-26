@@ -33,8 +33,8 @@ foreach ($goods as $key):
             ?>
             <th><p><?= $status?></p></th>
             <th>
-            <a href="/pizza/yii2/web/index.php?r=cook%2Faccept&amp;id_booking=<?=$key->booking_id?>&amp;id_goods=<?=$key->goods_id?>">Принять</span></a>
-            <a href="/pizza/yii2/web/index.php?r=cook%2Fready&amp;id_booking=<?=$key->booking_id?>&amp;id_goods=<?=$key->goods_id?>">Готово</span></a>
+            <a href="/pizza/yii2/web/index.php?r=cook%2Faccept&amp;id=<?=$key->booking_connect_id?>">Принять</span></a>
+            <a href="/pizza/yii2/web/index.php?r=cook%2Fready&amp;id=<?=$key->booking_connect_id?>">Готово</span></a>
             </th>
         </tr>
 <?php
