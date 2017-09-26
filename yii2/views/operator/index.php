@@ -5,7 +5,7 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use app\models\Bookink;
 /* @var $this yii\web\View */
-//$url='view';
+
 $this->title = Yii::t('app', 'Operator');
 ?>
 

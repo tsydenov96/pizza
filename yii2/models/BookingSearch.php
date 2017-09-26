@@ -51,5 +51,11 @@ class BookingSearch extends Operator{
 
         return $dataProvider;
     }
+
+    public static function tableName()
+    {
+        return '{{%booking}}';
+    }
+
 }
 
