@@ -66,7 +66,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $goods = Goods::find()->all();
+        $goods = Goods::find()->where(['goods_status' => 1])->all();
         return $this->render('index',['goods' => $goods]);
     }
 
