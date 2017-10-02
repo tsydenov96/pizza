@@ -129,7 +129,9 @@ class SiteController extends Controller
         return $this->goHome();
     }
     public function actionShoppingCart()
-    {        
+    {   
+        $session = Yii::$app->session;
+        $session->open();     
         if(isset($_SESSION['id'])){
             if(count($_SESSION['id'])){
                 $allGoods = array();
@@ -149,6 +151,8 @@ class SiteController extends Controller
     }
 
     public function actionDeleteGoods($id){
+        $session = Yii::$app->session;
+        $session->open();
         for($i = 0;$i<count($_SESSION['id']);$i++){
             if($_SESSION['id'][$i]->id == $id){
                 array_splice($_SESSION['id'], $i, 1);
@@ -159,6 +163,8 @@ class SiteController extends Controller
     }
 
     public function actionCountGoods($do,$id){
+        $session = Yii::$app->session;
+        $session->open();
         for($i = 0;$i<count($_SESSION['id']);$i++){
             if($_SESSION['id'][$i]->id == $id)
                 break;
@@ -174,6 +180,8 @@ class SiteController extends Controller
     }
 
     public function actionChooseGoods(){
+        $session = Yii::$app->session;
+        $session->open();
             $id = Yii::$app->request->post('goods_id');
             if(isset($_SESSION['id'])){
                 if(count($_SESSION['id'])!=0){
@@ -196,11 +204,15 @@ class SiteController extends Controller
     }
 
     public function clear(){
+        $session = Yii::$app->session;
+        $session->open();
         unset($_SESSION['id']);
         return $this->redirect(['index']);
     }
 
     public function actionBookingCreate(){
+        $session = Yii::$app->session;
+        $session->open();
         $model = new Booking();
         if (Yii::$app->request->isPost&&$model->load(Yii::$app->request->post()))
         {

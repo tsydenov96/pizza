@@ -51,6 +51,8 @@ public function behaviors() {
     }
     public function actionAccept($id)
     {
+        $session = Yii::$app->session;
+        $session->open();
         $model = $this->findModel($id);
         $model->operator_id = $_SESSION['__id'];
         $model->booking_status = 2; // 2 - принят
@@ -60,6 +62,8 @@ public function behaviors() {
 
     public function actionRemove($id)
     {
+        $session = Yii::$app->session;
+        $session->open();
         $model = $this->findModel($id);
         $model->operator_id = $_SESSION['__id'];
         $model->booking_status = 3; // 3 - не принят

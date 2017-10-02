@@ -42,6 +42,8 @@ public function behaviors() {
     }
 
     public function actionAccept($id){
+        $session = Yii::$app->session;
+        $session->open();
         $model = $this->findModel($id);
         $model->booking_connect_cook_id = $_SESSION['__id'];
         $model->booking_connect_status = 2; // 2 - принят
@@ -50,6 +52,8 @@ public function behaviors() {
     }
 
     public function actionReady($id){
+        $session = Yii::$app->session;
+        $session->open();
         $model = $this->findModel($id);
         $model->booking_connect_cook_id = $_SESSION['__id'];
         $model->booking_connect_status = 3; // 2 - готово

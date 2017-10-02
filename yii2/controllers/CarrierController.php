@@ -51,6 +51,8 @@ public function actionIndex()
 }
 public function actionAccept($id)
 {
+    $session = Yii::$app->session;
+    $session->open();
     $model = $this->findModel($id);
     $model->carrier_id = $_SESSION['__id'];
         $model->booking_status = 5; // 5 - принят
@@ -60,6 +62,8 @@ public function actionAccept($id)
 
     public function actionDelivery($id)
     {
+        $session = Yii::$app->session;
+        $session->open();
         $model = $this->findModel($id);
         $model->carrier_id = $_SESSION['__id'];
         $model->booking_status = 6; // 6 - доставлен
