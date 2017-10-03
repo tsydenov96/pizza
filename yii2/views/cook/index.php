@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Html;
 use app\models\Goods;
+use app\models\Cook;
+use app\models\BookingConnect;
 /* @var $this yii\web\View */
 
 $this->title = 'Cook Panel';
@@ -15,6 +17,7 @@ $this->title = 'Cook Panel';
 <th>#</th>
 <th>Название</th>
 <th>Статус</th>
+<th>Повар</th>
 <th>Действие</th>
 </tr>
 </thead>
@@ -32,6 +35,14 @@ foreach ($goods as $key):
                 }
             ?>
             <th><p><?= $status?></p></th>
+            <?php
+                if($key->booking_connect_status==2): 
+                    $cook = Cook::find()->innerJoin('pizza_booking_connect','pizza_cook.user_id = pizza_booking_connect.booking_connect_cook_id')->where(['booking_connect_id' => $key->booking_connect_id])->one();
+            ?>
+            <th><p><?= $cook->cook_name;?> <?= $cook->cook_surname;?></p></th>
+        <?php else: ?>
+            <th><p></p></th>
+        <?php endif; ?>
             <th>
             <a href="/pizza/yii2/web/index.php?r=cook%2Faccept&amp;id=<?=$key->booking_connect_id?>">Принять</span></a>
             <a href="/pizza/yii2/web/index.php?r=cook%2Fready&amp;id=<?=$key->booking_connect_id?>">Готово</span></a>
