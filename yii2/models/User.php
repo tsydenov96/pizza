@@ -7,7 +7,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
      public function rules()
     {
-        return [[['username','password'],'required'],
+        return [[['username','password','status'],'required'],
         ];
     }
 
@@ -83,5 +83,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function validatePassword($password)
     {
         return $this->password === $password;
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Логин',
+            'password' => 'Пароль',
+            'status' => 'Статус',
+        ];
     }
 }
