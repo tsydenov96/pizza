@@ -27,7 +27,7 @@ public function behaviors() {
         'access' => [ 'class' => AccessControl::className(), 
         'rules' => 
         [ 
-        [   'actions' => ['index','createGoods','updateGoods','deleteGoods','add-user','show-goods','show-user'], 
+        [   'actions' => ['index','create-goods','update-goods','delete-goods','add-user','show-goods','show-user', 'update-user', 'delete-user'], 
         'allow' => true,
         'matchCallback' => function ($rule, $action) {
                             $status =isset($_SESSION['status']) ? $_SESSION['status'] : null;
@@ -57,8 +57,10 @@ public function behaviors() {
 
     public function actionShowUser()
     {
-        $goods = User::find()->where(['!=','status','1'])->all();
-        return $this->render('showUser',['goods'=>$goods]);
+        $cooks = Cook::find()->all();
+        $operators = Operator::find()->all();
+        $carriers = Carrier::find()->all();
+        return $this->render('showUser',['cooks'=>$cooks, 'operators' => $operators, 'carriers' => $carriers]);
     }
     /***************
 
@@ -129,6 +131,46 @@ public function behaviors() {
             }
         return $this->render('create', ['model' => $model]);
     }
+    /*************************************
+    
+    Редактирование пользователя
+
+    *************************************/
+    public function actionUpdateUser($id_user,$info_id){
+        $model_user = $this->findUser($id_user);
+        $model_info = $this->findUserInfo($info_id,$model_user->status);
+        $model_info1 = new ModelInfo();
+        if (Yii::$app->request->isPost&&$model_user->load(Yii::$app->request->post())&&$model_info1->load(Yii::$app->request->post()))
+            {
+                switch ($model_user->status) {
+                    case '2':
+                        $model_info->operator_name = $model_info1->name;
+                        $model_info->operator_surname = $model_info1->surname;
+                        break;
+                    case '3': 
+                        $model_info->carrier_name = $model_info1->name;
+                        $model_info->carrier_surname = $model_info1->surname;
+                        break;
+                    case '4': 
+                        $model_info->cook_name = $model_info1->name;
+                        $model_info->cook_surname = $model_info1->surname;
+                        break;                    
+                }
+                $model_user->save();
+                $model_info->user_id = $model_user->user_id;
+                $model_info->save();
+                return $this->redirect(['index']);
+            } 
+        return $this->render('addUser', ['model_user' => $model_user,'model_info' => $model_info1]);
+    }
+
+    public function actionDeleteUser($id_user,$info_id){
+        $model_user = $this->findUser($id_user);
+        $model_info = $this->findUserInfo($info_id,$model_user->status);
+        $model_user->delete();
+        $model_info->delete();
+        return $this->redirect(['index']);
+    }
 
     public function actionDeleteGoods($id){
         $model = $this->findGoods($id);
@@ -141,6 +183,41 @@ public function behaviors() {
     protected function findGoods($id)
     {
         if (($model = Goods::find()->where(['goods_id'=>$id])->one()) !== null) 
+        {
+            return $model;
+        } 
+        else 
+        {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findUser($id)
+    {
+        if (($model = User::find()->where(['user_id'=>$id])->one()) !== null) 
+        {
+            return $model;
+        } 
+        else 
+        {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findUserInfo($id,$status)
+    {
+        switch ($status) {
+            case '2':
+                $model = Operator::find()->where(['operator_id'=>$id])->one();
+                break;
+            case '3':
+                $model = Carrier::find()->where(['carrier_id'=>$id])->one();
+                break;
+            case '4':
+                $model = Cook::find()->where(['cook_id'=>$id])->one();
+                break;
+        }
+        if ($model !== null) 
         {
             return $model;
         } 
