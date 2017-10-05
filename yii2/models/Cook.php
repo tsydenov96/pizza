@@ -12,8 +12,8 @@ class Cook extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cook_id', 'cook_name', 'cook_surname','user_id'], 'required'],
-            [['cook_id', 'user_id'], 'integer'],
+            [[ 'cook_name', 'cook_surname','user_id'], 'required'],
+            [[ 'user_id'], 'integer'],
         ];
     }
 

@@ -90,8 +90,6 @@ public function behaviors() {
                 $model_user->save();
                 $model_info->user_id = $model_user->user_id;
                 $model_info->save();
-                print_r($model_info);
-                exit();
                 return $this->redirect(['index']);
             } 
         return $this->render('addUser', ['model_user' => $model_user,'model_info' => $model_info1]);
