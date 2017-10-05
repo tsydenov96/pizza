@@ -12,8 +12,8 @@ class Carrier extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['carrier_id', 'carrier_name', 'carrier_surname','user_id'], 'required'],
-            [['carrier_id', 'carrier_id'], 'integer'],
+            [['carrier_name', 'carrier_surname','user_id'], 'required'],
+            [['carrier_id'], 'integer'],
         ];
     }
 

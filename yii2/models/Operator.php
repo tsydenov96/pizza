@@ -12,8 +12,8 @@ class Operator extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['operator_id', 'operator_name', 'operator_surname','user_id'], 'required'],
-            [['operator_id', 'user_id'], 'integer'],
+            [['operator_name', 'operator_surname','user_id'], 'required'],
+            [['user_id'], 'integer'],
         ];
     }
 
