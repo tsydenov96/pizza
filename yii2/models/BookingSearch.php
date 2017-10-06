@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Booking;
 
 
-class BookingSearch extends Operator{
+class BookingSearch extends Booking{
 
         public function search($params)
     {
