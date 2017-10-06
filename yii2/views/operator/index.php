@@ -22,14 +22,19 @@ $this->title = Yii::t('app', 'Operator');
         //'layout'=>"{sorter}\n{pager}\n{summary}\n{items}",
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
-            //'booking_id',
+        //'booking_id',
         'user_name',
         'user_address',
         'user_phone',
         //'carrier.username',
         'booking_status',
         'booking_date',
-        'operator.username',
+        [
+            'attribute' => 'operator.operator_name',
+            'value' => function($model) {
+                return $model->getOperatorName() . ' ' . $model->getOperatorSurname();
+            },
+        ],
         [
             'class' => 'yii\grid\ActionColumn',
             'controller' => 'operator',

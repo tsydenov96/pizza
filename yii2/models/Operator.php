@@ -27,4 +27,9 @@ class Operator extends \yii\db\ActiveRecord
             'operator_surname' => 'Фамилия',
         ];
     }
+    public function getBooking()
+    {
+        return $this->hasMany(Booking::className(), ['operator_id' => 'user_id']);
+    }  
+
 }

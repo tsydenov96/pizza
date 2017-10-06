@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Booking;
 
 
-class BookingSearch extends Operator{
+class BookingSearch extends Booking{
 
         public function search($params)
     {
@@ -44,10 +44,6 @@ class BookingSearch extends Operator{
 
         // $query->andFilterWhere(['like', 'img_name', $this->img_name])
         //     ->andFilterWhere(['like', 'advert_mess_text', $this->advert_mess_text])
-        //     ->andFilterWhere(['like', 'addit_inf', $this->addit_inf])
-        //     ->andFilterWhere(['like', 'stand_form', $this->stand_form])
-        //     ->andFilterWhere(['like', 'size', $this->size])
-        //     ->andFilterWhere(['like', 'domin_colors', $this->domin_colors]);
 
         return $dataProvider;
     }

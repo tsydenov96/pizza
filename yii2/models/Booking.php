@@ -54,8 +54,8 @@ class Booking extends \yii\db\ActiveRecord
             'carrier_id' => 'Carrier ID',
             'booking_status' => 'Статус',
             'booking_date' => 'Время',
-            'carrier.username' => 'Курьер',
-            'operator.username' => 'Оператор',
+            'carrier.carrier_name' => 'Курьер',
+            'operator.operator_name' => 'Оператор',
         ];
     }
 
@@ -65,21 +65,32 @@ class Booking extends \yii\db\ActiveRecord
     public function getBookingConnects()
     {
         return $this->hasMany(BookingConnect::className(), ['booking_id' => 'booking_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+    }    
     public function getGoods()
     {
         return $this->hasMany(Goods::className(), ['goods_id' => 'goods_id'])->viaTable('booking_connect', ['booking_id' => 'booking_id']);
     }
-
     public function getCarrier(){
-        return $this->hasOne(User::className(), ['user_id' => 'carrier_id']);
+        return $this->hasOne(Carrier::className(), ['user_id' => 'carrier_id']);
+    }
+    public function getCarrierName(){
+        $carrier = $this->carrier;
+        return $carrier ? $carrier->carrier_name : '';
+    }    
+    public function getCarrierSurname(){
+        $carrier = $this->carrier;
+        return $carrier ? $carrier->carrier_surname : '';
+    }
+    public function getOperator(){
+        return $this->hasOne(Operator::className(), ['user_id' => 'operator_id']);
+    }
+    public function getOperatorName(){
+        $operator = $this->operator;
+        return $operator ? $operator->operator_name : '';
+    }
+    public function getOperatorSurname(){
+        $operator = $this->operator;
+        return $operator ? $operator->operator_surname : '';
     }
 
-    public function getOperator(){
-        return $this->hasOne(User::className(), ['user_id' => 'operator_id']);
-    }
 }

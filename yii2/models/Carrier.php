@@ -27,4 +27,11 @@ class Carrier extends \yii\db\ActiveRecord
             'carrier_surname' => 'Фамилия',
         ];
     }
+    public function getBooking()
+    {
+        return $this->hasMany(Booking::className(), ['carrier_id' => 'user_id']);
+    }  
+
+
+
 }

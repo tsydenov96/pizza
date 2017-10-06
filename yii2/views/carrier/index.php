@@ -26,10 +26,22 @@ $this->title = Yii::t('app', 'Carrier');
         'user_name',
         'user_address',
         'user_phone',
-        'carrier.username',
+        [
+            'attribute' => 'carrier.carrier_name',
+            'value' => function($model) {
+                return $model->getCarrierName() . ' ' . $model->getCarrierSurname();
+            },
+        ],
+        //'carrier.carrier_name',
+        //'carrier.carrier_surname',
         'booking_status',
         'booking_date',
-        'operator.username',
+        [
+            'attribute' => 'operator.operator_name',
+            'value' => function($model) {
+                return $model->getOperatorName() . ' ' . $model->getOperatorSurname();
+            },
+        ],
         [
             'class' => 'yii\grid\ActionColumn',
             'controller' => 'carrier',
