@@ -22,7 +22,7 @@ public function behaviors() {
         'access' => [ 'class' => AccessControl::className(), 
         'rules' => 
         [ 
-        [   'actions' => ['index','accept','remove'], 
+        [   'actions' => ['index','accept','remove','view'], 
         'allow' => true,
         'matchCallback' => function ($rule, $action) {
                             $status =isset($_SESSION['status']) ? $_SESSION['status'] : null;
@@ -49,6 +49,11 @@ public function behaviors() {
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    public function actionView(){
+        return $this->render('view');
+    }
+
     public function actionAccept($id)
     {
         $session = Yii::$app->session;
