@@ -8,6 +8,8 @@ use yii\web\Controller;
 use yii\data\Pagination;
 use yii\filters\VerbFilter;
 use app\models\Booking;
+use app\models\BookingConnect;
+use app\models\Goods;
 use app\models\BookingSearch;
 
 
@@ -50,8 +52,16 @@ public function behaviors() {
         ]);
     }
 
-    public function actionView(){
-        return $this->render('view');
+    public function actionView($id){
+        $model = $this->findModel($id);
+        $account = (new \yii\db\Query())
+            ->select(['goods_name', 'COUNT(goods_name) AS count','goods_price'])
+            ->from('pizza_goods AS a')
+            ->join('INNER JOIN','pizza_booking_connect AS b','a.goods_id = b.goods_id')
+            ->where(['b.booking_id' => $model->booking_id])
+            ->groupBy(['goods_name'])
+            ->all();
+        return $this->render('view',['model' => $model,'account' => $account]);
     }
 
     public function actionAccept($id)

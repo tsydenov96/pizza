@@ -1,5 +1,7 @@
 <?php
-
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\widgets\LinkPager;
 /* @var $this yii\web\View */
 
 $this->title = 'Заказ';
@@ -14,45 +16,29 @@ $this->title = 'Заказ';
                 		<u>Контактная информация</u>
                 	</div>
                 	<br><br>
+                	<?php $form = ActiveForm::begin() ?>
                 	<div class="col-md-6">
-                		<p><b>Имя:</b> Андрей</p>
+                		<?= $form->field($model, 'user_name')->textInput()->label('Имя') ?>
                 	</div>
                 	<div class="col-md-6">
-                		<p><b>Фамилия:</b> Иванов</p>
+                		<?= $form->field($model, 'user_surname')->textInput()->label('Фамилия') ?>
                 	</div>
                 	<div class="col-md-6">
-                		<p><b>Отчество:</b> Павлович</p>
+                		<?= $form->field($model, 'user_patronymic')->textInput()->label('Отчество') ?>
                 	</div>
                 	<div class="col-md-6">
-                		<p><b>Номер телефона:</b> 89516324363</p>
+                		<?= $form->field($model, 'user_phone')->textInput()->label('Телефон') ?>
                 	</div>
                 	<div class="col-md-6">
-                		<p><b>Улица:</b> Ранжурова</p>
-                	</div>
-                	<div class="col-md-6">
-                		<p><b>Дом:</b> 5</p>
-                	</div>
-                	<div class="col-md-6">
-                		<p><b>Квартира:</b> 1</p>
-                	</div>
-                	<div class="col-md-6">
-                		<p><b>Подъезд:</b> 5</p>
-                	</div>
-                	<div class="col-md-6">
-                		<p><b>Этаж:</b> 4</p>
-                	</div>
-                	<div class="col-md-6">
-                		<p><b>Домофон:</b> 4</p>
+                		<?= $form->field($model, 'user_address')->textInput()->label('Адрес') ?>
                 	</div>
                 </div>
                 <div class="row">
                 	<div class="col-md-6">
-                		<button class="btn btn-large btn-primary">Редактировать</button>
-                	</div>
-                	<div class="col-md-6">
-                		<button class="btn btn-large btn-success">Далее</button>
+                		<button type="submit" class="btn btn-large btn-success">Принять заказ</button>
                 	</div>
                 </div>
+                <?php $form = ActiveForm::end() ?>
             </div>
             <div class="col-md-4">
             	<div class="row">
@@ -61,7 +47,7 @@ $this->title = 'Заказ';
 	                </div>
 	                <br><br>
 	                <div class="col-md-12">
-	                	Заказ №1234
+	                	Заказ №<?= $model->booking_id?>
 	                </div>
 	                <br><br>
 	                <div class="col-md-12">
@@ -74,29 +60,25 @@ $this->title = 'Заказ';
 								</tr>
 							</thead>
 							<tbody>
+								<?php
+									$price = 0;
+									foreach ($account as $ac): 
+								?>
 								<tr>
-									<th>Пицца 1</th>
-									<th>1</th>
-									<th>320</th>
-								</tr>
-								<tr>
-									<th>Пицца 2</th>
-									<th>1</th>
-									<th>320</th>
-								</tr>
-								<tr>
-									<th>Пицца 7</th>
-									<th>1</th>
-									<th>350</th>
-								</tr>
+						            <th><p><?= Html::encode ("{$ac['goods_name']}") ?> </p> </th>
+						            <th><p><?= Html::encode ("{$ac['count']}") ?> </p> </th>
+						            <?php $goods_price = $ac['goods_price']*$ac['count'];?>
+						            <th><p><?= Html::encode ("{$goods_price}") ?> </p> </th>
+					        	</tr>
+								<?php
+									$price+=$ac['goods_price']*$ac['count'];
+									endforeach;
+								?>
 							</tbody>
 						</table>
 	                </div>
 	                <div class="col-md-12">
-	                	<b>Промокод</b>: 12345
-	                </div>
-	                <div class="col-md-12">
-	                	<b>Итого</b>: 990 рублей
+	                	<b>Итого</b>: <?= $price?> рублей
 	                </div>
 	            </div>
             </div>
