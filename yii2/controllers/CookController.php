@@ -37,7 +37,9 @@ public function behaviors() {
     }
     public function actionIndex()
     {
-        $goods = BookingConnect::find()->where(['!=','booking_connect_status', 3 ])->orderBy('goods_id')->all();
+        $session = Yii::$app->session;
+        $session->open();
+        $goods = BookingConnect::find()->where(['OR',['AND',['booking_connect_status' => 1]],['AND',['booking_connect_status' => 2],['booking_connect_cook_id' => $_SESSION['__id']]]])->all();
         return $this->render('index',['goods'=>$goods]);
     }
 
