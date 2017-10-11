@@ -6,12 +6,16 @@ use yii\widgets\Pjax;
 use app\models\Bookink;
 /* @var $this yii\web\View */
 
-$this->title = Yii::t('app', 'Operator');
+$this->title = Yii::t('app', 'Оператор');
 ?>
 
 <div class="booking-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 align="center"><?= $this->title?></h1>
+
+    <p> 
+    <a href="index.php?r=operator/create"> <button class="bttn-unite bttn-md bttn-danger">Создать заказ</button></a>        
+    </p>
 
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
@@ -24,8 +28,13 @@ $this->title = Yii::t('app', 'Operator');
         ['class' => 'yii\grid\SerialColumn'],
         //'booking_id',
         'user_name',
-        'user_address',
         'user_phone',
+        'user_street',
+        'user_house_number',
+        'user_apartment_number',
+        'user_entrance_number',
+        'user_floor_number',
+        'user_intercom',
         //'carrier.username',
         'booking_status',
         'booking_date',

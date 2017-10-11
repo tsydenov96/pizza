@@ -11,7 +11,6 @@ use Yii;
  * @property string $user_surname
  * @property string $user_name
  * @property string $user_patronymic
- * @property string $user_address
  * @property integer $user_phone
  * @property integer $operator_id
  * @property integer $carrier_id
@@ -31,10 +30,10 @@ class Booking extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_surname', 'user_name', 'user_patronymic', 'user_address', 'user_phone', 'booking_status', 'booking_date'], 'required'],
+            [['user_surname', 'user_name', 'user_patronymic', 'user_phone','user_street', 'user_house_number', 'user_apartment_number', 'user_entrance_number', 'user_floor_number', 'user_intercom', 'booking_status', 'booking_date'], 'required'],
             [['user_phone', 'operator_id', 'carrier_id', 'booking_status'], 'integer'],
             [['booking_date'], 'safe'],
-            [['user_surname', 'user_name', 'user_patronymic', 'user_address'], 'string', 'max' => 255],
+            [['user_surname', 'user_name', 'user_patronymic'], 'string', 'max' => 255],
         ];
     }
 
@@ -48,8 +47,13 @@ class Booking extends \yii\db\ActiveRecord
             'user_surname' => 'Фамилия',
             'user_name' => 'Имя',
             'user_patronymic' => 'Отчество',
-            'user_address' => 'Адрес',
             'user_phone' => 'Телефон',
+            'user_street' => 'Улица',
+            'user_house_number' => 'Номер дома',
+            'user_apartment_number' => 'Номер квартиры',
+            'user_entrance_number' => 'Номер подъезда',
+            'user_floor_number' => 'Этаж',
+            'user_intercom' => 'Домофон',
             'operator_id' => 'Operator ID',
             'carrier_id' => 'Carrier ID',
             'booking_status' => 'Статус',

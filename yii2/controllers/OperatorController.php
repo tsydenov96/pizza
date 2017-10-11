@@ -24,7 +24,7 @@ public function behaviors() {
         'access' => [ 'class' => AccessControl::className(), 
         'rules' => 
         [ 
-        [   'actions' => ['index','accept','remove','view'], 
+        [   'actions' => ['index','accept','remove','view','create'], 
         'allow' => true,
         'matchCallback' => function ($rule, $action) {
                             $status =isset($_SESSION['status']) ? $_SESSION['status'] : null;
@@ -62,6 +62,12 @@ public function behaviors() {
             ->groupBy(['goods_name'])
             ->all();
         return $this->render('view',['model' => $model,'account' => $account]);
+    }
+
+    public function actionCreate(){
+        $model = new Booking();
+        $goods = Goods::find()->where(['goods_status' => 1])->all();
+        return $this->render('create',['model' => $model, 'goods' => $goods]);
     }
 
     public function actionAccept($id)
