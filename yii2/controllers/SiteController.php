@@ -69,7 +69,6 @@ class SiteController extends Controller
         $goods = Goods::find()->where(['goods_status' => 1])->all();
         return $this->render('index',['goods' => $goods]);
     }
-
     /**
      * Login action.
      *
@@ -182,7 +181,7 @@ class SiteController extends Controller
     public function actionChooseGoods(){
         $session = Yii::$app->session;
         $session->open();
-            $id = Yii::$app->request->post('goods_id');
+        $id = Yii::$app->request->post('id');
             if(isset($_SESSION['id'])){
                 if(count($_SESSION['id'])!=0){
                     $i=0;
@@ -200,7 +199,7 @@ class SiteController extends Controller
                 $_SESSION['id'][]=new GoodsInBasket($id);
             }
                        
-            return $this->goBack();
+            return 1;
     }
 
     public function clear(){

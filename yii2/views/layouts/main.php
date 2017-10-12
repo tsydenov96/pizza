@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\Goods;
 
 AppAsset::register($this);
 ?>
@@ -123,7 +124,21 @@ AppAsset::register($this);
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
+<script type="text/javascript">
+window.state = <?php
+    $ar = array();
+    foreach (Goods::find()->all() as $key => $val) {
+        $ar[$val->goods_id]['goods_id']=$val->goods_id;
+        $ar[$val->goods_id]['goods_name']=$val->goods_name;
+        $ar[$val->goods_id]['goods_price']=$val->goods_price;
+        $ar[$val->goods_id]['goods_img']=$val->goods_img;
+        $ar[$val->goods_id]['count']=0;
+    }
+    echo json_encode(['goods' => $ar]);
+ ?>
 
+</script>
+<script src="js/scripts.js" defer></script> 
 <?php $this->endBody() ?>
 </body>
 </html>

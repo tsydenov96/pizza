@@ -57,14 +57,14 @@ $this->title = 'Заказ';
                 	</div>
                 </div>
                 <div class="form-2" style="display: none;">
-                	<!-- <div class="col-md-12"> -->
+                	<div class="col-md-12">
                 		<ul class="nav nav-tabs">
 						  <li class="active"><a href="#pizza" data-toggle="tab">Пицца</a></li>
 						  <li><a href="#dessert" data-toggle="tab">Десерты</a></li>
 						  <li><a href="#beverages" data-toggle="tab">Напитки</a></li>
 						</ul>
-                	<!-- </div> -->
-                	<div class="tab-content">
+                	</div>
+                  	<div class="tab-content">
                 		<div class="tab-pane active" id="pizza">
 	                		<?php
 	                			foreach ($goods as $goods):
@@ -87,10 +87,11 @@ $this->title = 'Заказ';
 					    	beverages
 					    </div>
                 	</div> 	
-	                <div class="col-md-7">
+                	<br><br><br>
+	                <div class="col-md-6">
 	                	<button type="button" class="btn btn-large btn-success" id="first-back">Назад</button>
 	                </div>
-	                <div class="col-md-5">
+	                <div class="col-md-6">
 	                	<button type="button" class="btn btn-large btn-success" id="second-next">Далее</button>
 	                </div>
                 </div>
