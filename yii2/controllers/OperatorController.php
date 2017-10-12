@@ -65,8 +65,10 @@ public function behaviors() {
     }
 
     public function actionCreate(){
+        $_SESSION['name'] = Yii::$app->request->post('name');
         $model = new Booking();
         $goods = Goods::find()->where(['goods_status' => 1])->all();
+
         return $this->render('create',['model' => $model, 'goods' => $goods]);
     }
 

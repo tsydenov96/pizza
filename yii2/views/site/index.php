@@ -35,3 +35,4 @@ $this->title = 'Pizza store';
         </div>
     </div>
 </div>
+<script src="js/scripts.js" defer></script> 
