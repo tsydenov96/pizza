@@ -55,20 +55,19 @@ public function behaviors() {
     public function actionView($id){
         $model = $this->findModel($id);
         $account = (new \yii\db\Query())
-            ->select(['goods_name', 'COUNT(goods_name) AS count','goods_price'])
+            ->select(['a.goods_id','goods_name', 'COUNT(goods_name) AS count','goods_price'])
             ->from('pizza_goods AS a')
             ->join('INNER JOIN','pizza_booking_connect AS b','a.goods_id = b.goods_id')
             ->where(['b.booking_id' => $model->booking_id])
             ->groupBy(['goods_name'])
             ->all();
-        return $this->render('view',['model' => $model,'account' => $account]);
+        $goods = Goods::find()->where(['goods_status' => 1])->all();
+        return $this->render('create',['model' => $model,'account' => $account, 'goods' => $goods]);
     }
 
     public function actionCreate(){
-        $_SESSION['name'] = Yii::$app->request->post('name');
         $model = new Booking();
         $goods = Goods::find()->where(['goods_status' => 1])->all();
-
         return $this->render('create',['model' => $model, 'goods' => $goods]);
     }
 

@@ -1,36 +1,90 @@
 "use strict";
 
 $(document).ready(function(){
-$('#first-next').click(function(){
-	var name = $(this).closest('form').find('input[name="Booking[user_name]"]').val();
-	var surname = $(this).closest('form').find('input[name="Booking[user_surname]"]').val();
-	var patronymic = $(this).closest('form').find('input[name="Booking[user_patronymic]"]').val();
-	var phone = $(this).closest('form').find('input[name="Booking[user_phone]"]').val();
-	var street = $(this).closest('form').find('input[name="Booking[user_street]"]').val();
-	var house_num = $(this).closest('form').find('input[name="Booking[user_house_number]"]').val();
-	var apartment_num = $(this).closest('form').find('input[name="Booking[user_apartment_number]"]').val();
-	var entrance_num = $(this).closest('form').find('input[name="Booking[user_entrance_number]"]').val();
-	var floor = $(this).closest('form').find('input[name="Booking[user_floor_number]"]').val();
-	var intercom = $(this).closest('form').find('input[type="radio"]').val();
-	var _csrf = $(this).closest('form').find('input[name=_csrf]').val();
-	var data = {name: name, surname: surname, patronymic: patronymic, phone: phone, street: street, house_num: house_num, apartment_num: apartment_num, entrance_num: entrance_num, floor: floor, intercom: intercom, _csrf: _csrf}
-	console.log(data);
-	$.ajax({
-			url: $(this).closest('form').attr('action'),
-			type: 'POST',
-			data: data,
-			success: function(response){
-				alert('Работает!');
+if(window.date.goods !== undefined){
+	localStorage.setItem('cart', window.date.goods);
+}
+show(JSON.parse(localStorage.getItem('cart')) || []);
+//отправка первой формы
+$('form').on('beforeSubmit', function(e) {
+    var form = $(this);
+    var formData = form.serialize();
+    $.ajax({
+        type:'POST',      
+        url: $(this).closest('form').attr('action'),
+        data: formData,
+        success: function(response){
+				form.yiiActiveForm('data').validated = false;
+				nextScreen();
 			},
 			error: function(e){
 				console.error(e);
 			}
-		})
-	nextScreen();
+    });
+}).on('submit', function(e){
+    e.preventDefault();
 })
-// $('#first-back').click(function(){
+//переход обратно к первой форме
+$('#first-back').click(function(){
+	backScreen();
+})
+//добавление в корзину товара
+$('.btn-add').click(function(){
+	var id = $(this).attr('data-id');
+	var name = $(this).closest('div').find('.name').text();
+	var price = $(this).closest('div').find('.price').text();
+	if (localStorage){
+			var cart = JSON.parse(localStorage.getItem('cart')) || [];
+			var i = 0; 
+			for(i = 0 ; i < cart.length ; i++){
+				if (cart[i].id == id){
+					cart[i].count++;
+					break;
+				}
+			}
+			if (i == cart.length){
+				cart.push({'id' : id, 'name' : name, 'price' : price, 'count' : 1});
+			}
+			localStorage.setItem('cart', JSON.stringify(cart));
+	}
+	show(cart);
+})
+// функция вывода на экран товаров
 
-// })
+function show(cart){
+	var out = '';
+	var totalPrice = 0;
+	var price = 0;
+	for(var i = 0; i < cart.length; i++){
+		out+='<tr>';
+		out+='<th><p>'+cart[i].name+'</p></th>';
+		out+='<th><p>'+cart[i].count+'</p></th>';
+		price = cart[i].count*cart[i].price;
+		totalPrice += price;
+		out+='<th><p>'+price+'</p></th>';
+		out+='<th><span class="glyphicon glyphicon-remove goods-remove" data-id="'+cart[i].id+'"></span></th>';
+		out+='</tr>';
+	}
+	$('.table-goods tbody').html(out);
+	$('.total-price').html('<b>Итого</b>: '+totalPrice+' рублей.');
+}
+
+
+
+// удаление товара из корзины
+$(document).on('click','.goods-remove',function(){
+	var id = $(this).attr('data-id');
+	var cart = JSON.parse(localStorage.getItem('cart'));
+	for(var i = 0; i < cart.lenght; i++){
+		if(cart[i].id == id){
+			cart.splice(i,1);
+			break;
+		}
+	}
+	cart.splice(0,1);
+	localStorage.setItem('cart', JSON.stringify(cart));
+	show(cart);
+})
 });
 
 function nextScreen(){
