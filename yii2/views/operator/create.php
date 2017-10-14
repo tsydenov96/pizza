@@ -146,19 +146,20 @@ $this->title = 'Заказ';
     </div>
 </div>
 <?php
-$ar = array();
- 	  $i=0;
- -    foreach ($account as $val) :
-	 -    $ar[$i]['goods_id']=$val->goods_id;
-	 -    $ar[$i]['goods_name']=$val->goods_name;
-	 -    $ar[$i]['goods_price']=$val->goods_price;
-	 -    $ar[$i]['count']=$val->count;
-	      $i++;
- -    endforeach;
+
  ?>
 <script type="text/javascript">
 	window.date = <?php
- -    echo json_encode(['goods' => $ar]);
- - ?>;
+	$ar = array();
+ 	  $i=0;
+     foreach ($account as $val) {
+	     $ar[$i]['id']=$val['goods_id'];
+	     $ar[$i]['name']=$val['goods_name'];
+	     $ar[$i]['price']=$val['goods_price'];
+	     $ar[$i]['count']=$val['count'];
+	      $i++;
+    }
+     echo json_encode(['goods' => $ar])
+ ?>
 </script>
 <script src="js/createBooking.js" defer></script> 

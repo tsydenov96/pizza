@@ -2,7 +2,7 @@
 
 $(document).ready(function(){
 if(window.date.goods !== undefined){
-	localStorage.setItem('cart', window.date.goods);
+	localStorage.setItem('cart', JSON.stringify(window.date.goods));
 }
 show(JSON.parse(localStorage.getItem('cart')) || []);
 //отправка первой формы
