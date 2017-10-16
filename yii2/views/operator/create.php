@@ -60,7 +60,7 @@ $this->title = 'Заказ';
 						    	])->label('Домофон'); 
 						    ?>
 	                	</div>
-	                </div>
+	               </div> 
                 <!-- Конец 1 формы -->
                 	<div class="row">
 	                	<div class="col-md-12">
@@ -106,10 +106,41 @@ $this->title = 'Заказ';
                 	<hr>
                 	<div class="row">
 		                <div class="col-md-6">
-		                	<button type="button" class="btn btn-large btn-success" id="first-back">Назад</button>
+		                	<button type="button" class="btn btn-large btn-primary" id="first-back">Назад</button>
 		                </div>
 		                <div class="col-md-6">
 		                	<button type="button" class="btn btn-large btn-success" id="second-next">Далее</button>
+		                </div>
+		            </div>
+                </div>
+                <div class="form-3" style="display: none;">
+                	<h1>Оплата</h1>
+                	<div class="clearfix"></div>
+                	<hr>
+                	<div class="row">
+	                	<div class="col-md-6">
+	                		<button type="button" class="btn btn-large btn-default">Наличные</button>
+	                	</div>	
+	                	<div class="col-md-6">
+	                		<button type="button" class="btn btn-large btn-default">Карта</button>
+	                	</div>	
+	                </div>
+	                <h1>Купюры к оплате</h1>
+	                <hr>
+	               	<div class="row">
+	               		<button type="button" class="btn btn-large btn-default">100</button>
+	               		<button type="button" class="btn btn-large btn-default">500</button>
+	               		<button type="button" class="btn btn-large btn-default">1000</button>
+	               		<button type="button" class="btn btn-large btn-default">5000</button>
+	               	</div>
+                	<div class="clearfix"></div>
+                	<hr>
+                	<div class="row">
+		                <div class="col-md-6">
+		                	<button type="button" class="btn btn-large btn-primary" id="second-back">Назад</button>
+		                </div>
+		                <div class="col-md-6">
+		                	<button type="button" class="btn btn-large btn-success" id="accept">Готово</button>
 		                </div>
 		            </div>
                 </div>
@@ -148,17 +179,17 @@ $this->title = 'Заказ';
 <?php
 $ar = array();
  	  $i=0;
- -    foreach ($account as $val) :
-	 -    $ar[$i]['goods_id']=$val->goods_id;
-	 -    $ar[$i]['goods_name']=$val->goods_name;
-	 -    $ar[$i]['goods_price']=$val->goods_price;
-	 -    $ar[$i]['count']=$val->count;
+     foreach ($account as $val) :
+	     $ar[$i]['goods_id']=$val->goods_id;
+	     $ar[$i]['goods_name']=$val->goods_name;
+	     $ar[$i]['goods_price']=$val->goods_price;
+	     $ar[$i]['count']=$val->count;
 	      $i++;
- -    endforeach;
+     endforeach;
  ?>
 <script type="text/javascript">
 	window.date = <?php
- -    echo json_encode(['goods' => $ar]);
- - ?>;
+     echo json_encode(['goods' => $ar]);
+  ?>;
 </script>
 <script src="js/createBooking.js" defer></script> 

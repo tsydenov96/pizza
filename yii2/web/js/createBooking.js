@@ -2,7 +2,7 @@
 
 $(document).ready(function(){
 if(window.date.goods !== undefined){
-	localStorage.setItem('cart', window.date.goods);
+	localStorage.setItem('cart', JSON.stringify(window.date.goods));
 }
 show(JSON.parse(localStorage.getItem('cart')) || []);
 //отправка первой формы
@@ -15,7 +15,7 @@ $('form').on('beforeSubmit', function(e) {
         data: formData,
         success: function(response){
 				form.yiiActiveForm('data').validated = false;
-				nextScreen();
+				nextToSecondScreen();
 			},
 			error: function(e){
 				console.error(e);
@@ -26,7 +26,13 @@ $('form').on('beforeSubmit', function(e) {
 })
 //переход обратно к первой форме
 $('#first-back').click(function(){
-	backScreen();
+	backToFirstScreen();
+})
+$('#second-back').click(function(){
+	backToSecondScreen();
+})
+$('#second-next').click(function(){
+	nextToThirdScreen();
 })
 //добавление в корзину товара
 $('.btn-add').click(function(){
@@ -87,12 +93,23 @@ $(document).on('click','.goods-remove',function(){
 })
 });
 
-function nextScreen(){
+function nextToSecondScreen(){
 	$('.form-1').hide();
 	$('.form-2').show();
 }
 
-function backScreen(){
+function nextToThirdScreen(){
+	$('.form-2').hide();
+	$('.form-3').show();
+}
+
+
+function backToFirstScreen(){
 	$('.form-1').show();
 	$('.form-2').hide();
+}
+
+function backToSecondScreen(){
+	$('.form-2').show();
+	$('.form-3').hide();
 }

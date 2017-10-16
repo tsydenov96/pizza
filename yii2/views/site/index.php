@@ -35,4 +35,4 @@ $this->title = 'Pizza store';
         </div>
     </div>
 </div>
-<script src="js/scripts.js" defer></script> 
+<script src="js/cart-add.js" defer></script> 
