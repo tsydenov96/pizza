@@ -24,7 +24,12 @@ $this->title = Yii::t('app', 'Carrier');
         ['class' => 'yii\grid\SerialColumn'],
             //'booking_id',
         'user_name',
-        'user_address',
+        'user_street',
+        'user_house_number',
+        'user_apartment_number',
+        'user_entrance_number',
+        'user_floor_number',
+        'user_intercom',
         'user_phone',
         [
             'attribute' => 'carrier.carrier_name',
@@ -36,12 +41,6 @@ $this->title = Yii::t('app', 'Carrier');
         //'carrier.carrier_surname',
         'booking_status',
         'booking_date',
-        [
-            'attribute' => 'operator.operator_name',
-            'value' => function($model) {
-                return $model->getOperatorName() . ' ' . $model->getOperatorSurname();
-            },
-        ],
         [
             'class' => 'yii\grid\ActionColumn',
             'controller' => 'carrier',
@@ -64,3 +63,4 @@ $this->title = Yii::t('app', 'Carrier');
     ],
 ]); 
 ?>
+</div>
