@@ -44,8 +44,8 @@ foreach ($goods as $key):
             <th><p></p></th>
         <?php endif; ?>
             <th>
-            <a href="/pizza/yii2/web/index.php?r=cook%2Faccept&amp;id=<?=$key->booking_connect_id?>">Принять</span></a>
-            <a href="/pizza/yii2/web/index.php?r=cook%2Fready&amp;id=<?=$key->booking_connect_id?>">Готово</span></a>
+            <a href="/yii2/web/index.php?r=cook%2Faccept&amp;id=<?=$key->booking_connect_id?>">Принять</span></a>
+            <a href="/yii2/web/index.php?r=cook%2Fready&amp;id=<?=$key->booking_connect_id?>">Готово</span></a>
             </th>
         </tr>
 <?php

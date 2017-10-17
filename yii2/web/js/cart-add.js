@@ -5,7 +5,7 @@ $(document).ready(function(){
 		var id = $(this).closest('form').find('input[name=goods_id]').val();
 		var _csrf = $(this).closest('form').find('input[name=_csrf]').val();
 		$.ajax({
-			url: '/pizza/yii2/web/'+$(this).closest('form').attr('action'),
+			url: '/yii2/web/'+$(this).closest('form').attr('action'),
 			type: 'POST',
 			data: {id: id, _csrf: _csrf},
 			success: function(response){

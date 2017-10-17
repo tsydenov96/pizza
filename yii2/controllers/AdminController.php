@@ -175,7 +175,7 @@ public function behaviors() {
     public function actionDeleteGoods($id){
         $model = $this->findGoods($id);
         if($model->goods_img!=='123')
-            unlink($_SERVER['DOCUMENT_ROOT'].'/pizza/yii2/upload/'.$model->goods_img);
+            unlink($_SERVER['DOCUMENT_ROOT'].'/yii2/upload/'.$model->goods_img);
         $model->delete();
         return $this->redirect(['index']);
     }

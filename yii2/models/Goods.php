@@ -28,7 +28,7 @@ class Goods extends \yii\db\ActiveRecord
             }
             else
             {
-                $this->goods_img->saveAs($_SERVER['DOCUMENT_ROOT'].'/pizza/yii2/upload/' .time()."_". $this->goods_img->baseName . '.' . $this->goods_img->extension);
+                $this->goods_img->saveAs($_SERVER['DOCUMENT_ROOT'].'/yii2/upload/' .time()."_". $this->goods_img->baseName . '.' . $this->goods_img->extension);
                 $this->goods_img=time()."_".$this->goods_img->baseName . '.' . $this->goods_img->extension;
                 return true;
             } 
@@ -49,8 +49,8 @@ class Goods extends \yii\db\ActiveRecord
             else
             {
                 if($link_old!='123')
-                    unlink($_SERVER['DOCUMENT_ROOT'].'/pizza/yii2/upload/'.$link_old);
-                $this->goods_img->saveAs($_SERVER['DOCUMENT_ROOT'].'/pizza/yii2/upload/' .time()."_". $this->goods_img->baseName . '.' . $this->goods_img->extension);
+                    unlink($_SERVER['DOCUMENT_ROOT'].'/yii2/upload/'.$link_old);
+                $this->goods_img->saveAs($_SERVER['DOCUMENT_ROOT'].'/yii2/upload/' .time()."_". $this->goods_img->baseName . '.' . $this->goods_img->extension);
                 $this->goods_img=time()."_".$this->goods_img->baseName . '.' . $this->goods_img->extension;
                 return true;
             } 

@@ -85,7 +85,7 @@ $this->title = 'Заказ';
 	                			foreach ($goods as $goods):
 					        ?>
 					        <div class="col-md-4">
-					            <img src="<?='/pizza/yii2/upload/'.$goods->goods_img?>" width="100" height="100" class="img-rounded" alt="<?= $goods->goods_name?>">
+					            <img src="<?='/yii2/upload/'.$goods->goods_img?>" width="100" height="100" class="img-rounded" alt="<?= $goods->goods_name?>">
 					            <br>
 					            <p class="name"><?= Html::encode ("{$goods->goods_name}") ?></p>
 					            <p class="price"><?= Html::encode ("{$goods->goods_price}") ?></p>

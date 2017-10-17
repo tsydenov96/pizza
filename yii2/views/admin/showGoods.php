@@ -29,8 +29,8 @@ foreach ($goods as $key):
             <th><p><?= Html::encode ("{$key->goods_name}") ?></p> </th>
             <th><p><?= Html::encode ("{$key->goods_price}") ?></p> </th>
             <th>
-            <a href="/pizza/yii2/web/index.php?r=admin%2Fupdate-goods&amp;id=<?=$key->goods_id?>" title="Update" aria-label="Update" data-pjax="0"><span class="glyphicon glyphicon-pencil"></span></a>
-            <a href="/pizza/yii2/web/index.php?r=admin%2Fdelete-goods&amp;id=<?=$key->goods_id?>" title="Delete" aria-label="Delete" data-confirm="Are you sure you want to delete this item?" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a>
+            <a href="/yii2/web/index.php?r=admin%2Fupdate-goods&amp;id=<?=$key->goods_id?>" title="Update" aria-label="Update" data-pjax="0"><span class="glyphicon glyphicon-pencil"></span></a>
+            <a href="/yii2/web/index.php?r=admin%2Fdelete-goods&amp;id=<?=$key->goods_id?>" title="Delete" aria-label="Delete" data-confirm="Are you sure you want to delete this item?" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a>
             </th>
         </tr>
 <?php $i++;
