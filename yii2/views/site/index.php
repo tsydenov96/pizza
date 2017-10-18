@@ -29,7 +29,6 @@ $this->title = 'Pizza store';
                         <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
                         <button type="button" class="btn-add" id="<?=$goods->goods_id?>">В корзину</button>
                     </form>
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                     <script type="text/javascript">
                         $(document).ready(function(){
                             $('#<?=$goods->goods_id?>').click(function() {

@@ -68,6 +68,30 @@ public function behaviors() {
     public function actionCreate(){
         $model = new Booking();
         $goods = Goods::find()->where(['goods_status' => 1])->all();
+        if (Yii::$app->request->isPost&&$model->load(Yii::$app->request->post()))
+        {
+            if(isset($_SESSION['status'])){
+                switch ($_SESSION['status']) {
+                    case 'operator':
+                    $model->operator_id=$_SESSION['__id'];
+                    $model->booking_status = 2;
+                    break;
+                }
+            }
+            if($model->booking_status != 2)
+                $model->booking_status = 1;
+            $model->booking_date = date('Y-m-d H:i');
+            $model->save();
+            for($i = 0; $i<count($_SESSION['id']);$i++){
+                for($j = 0; $j < $_SESSION['id'][$i]->count;$j++){
+                    $bookingCon = new BookingConnect();
+                    $bookingCon->booking_id = $model->booking_id;   
+                    $bookingCon->goods_id = $_SESSION['id'][$i]->id;
+                    $bookingCon->booking_connect_status = 1;
+                    $bookingCon->save();
+                }
+            }
+        }
         return $this->render('create',['model' => $model, 'goods' => $goods, 'account' => []]);
     }
 

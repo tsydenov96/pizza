@@ -146,7 +146,7 @@ $this->title = 'Заказ';
                 </div>
             </div>
             <div class="col-md-4">
-            	<div class="row">
+            	<div class="row order" style="display: none;">
 	            	<div class="col-md-12">
 	                	<u>Счет</u>
 	                </div>

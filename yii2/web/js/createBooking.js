@@ -1,6 +1,8 @@
 "use strict";
 
 $(document).ready(function(){
+var formData;
+var url;
 if(window.date.goods !== undefined){
 	localStorage.setItem('cart', JSON.stringify(window.date.goods));
 }
@@ -8,19 +10,22 @@ show(JSON.parse(localStorage.getItem('cart')) || []);
 //отправка первой формы
 $('form').on('beforeSubmit', function(e) {
     var form = $(this);
-    var formData = form.serialize();
-    $.ajax({
-        type:'POST',      
-        url: $(this).closest('form').attr('action'),
-        data: formData,
-        success: function(response){
-				form.yiiActiveForm('data').validated = false;
-				nextToSecondScreen();
-			},
-			error: function(e){
-				console.error(e);
-			}
-    });
+    formData = form.serialize();
+    url = $(this).closest('form').attr('action');
+    form.yiiActiveForm('data').validated = false;
+	nextToSecondScreen();
+   //  $.ajax({
+   //      type:'POST',      
+   //      url: $(this).closest('form').attr('action'),
+   //      data: formData,
+   //      success: function(response){
+			// 	form.yiiActiveForm('data').validated = false;
+			// 	nextToSecondScreen();
+			// },
+			// error: function(e){
+			// 	console.error(e);
+			// }
+   //  });
 }).on('submit', function(e){
     e.preventDefault();
 })
@@ -33,6 +38,25 @@ $('#second-back').click(function(){
 })
 $('#second-next').click(function(){
 	nextToThirdScreen();
+})
+$('#accept').click(function(){
+	var cart = JSON.parse(localStorage.getItem('cart')) || null;
+	if(cart === null){
+		alert('Вы не добавили товаров в корзину!');
+		return;
+	}
+	data = {form : formData, cart : cart};
+	$.ajax({
+        type:'POST',      
+        url: url,
+        data: data,
+        success: function(response){
+				alert('Заказ добавлен');
+			},
+			error: function(e){
+				console.error(e);
+			}
+    });
 })
 //добавление в корзину товара
 $('.btn-add').click(function(){
@@ -96,6 +120,7 @@ $(document).on('click','.goods-remove',function(){
 function nextToSecondScreen(){
 	$('.form-1').hide();
 	$('.form-2').show();
+	$('.order').show();	
 }
 
 function nextToThirdScreen(){
@@ -107,6 +132,7 @@ function nextToThirdScreen(){
 function backToFirstScreen(){
 	$('.form-1').show();
 	$('.form-2').hide();
+	$('.order').hide();
 }
 
 function backToSecondScreen(){
