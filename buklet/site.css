@@ -1,0 +1,49 @@
+.head{
+  		font-size: 25px;
+  		font-weight: 700;
+  		color: red;
+  	}
+  	.poem-1{
+  		font-weight: 700;
+  		font-style: italic;
+  	}
+  	.poem-2{
+  		font-weight: 700;
+  		font-style: italic;
+  		color: white;
+  	}
+  	.poem-2-end{
+  		font-size: 25px;
+  	}
+  	.author{
+  		padding-top: 0px !important;
+  		padding-left: 370px;
+  		color: white;
+  	}
+  	img{
+  		float: left;
+  	}
+  	.right-half{
+  		background-color: black;
+  	}
+    .head-2{
+      padding-left: 170px;
+      color: red;
+      font-weight: 700;
+    }
+    .poem-3{
+      font-weight: 600;
+      color: red;
+    }
+    .author-2{
+      color: red;
+      padding-left: 320px;
+      font-weight: 600;
+    }
+    .poem-3-head{
+      color: red;
+      font-weight: 700;
+    }
+  	/*body{
+  		background: url(1234.jpg);
+  	}*/
