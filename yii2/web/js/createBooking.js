@@ -40,18 +40,18 @@ $('#second-next').click(function(){
 	nextToThirdScreen();
 })
 $('#accept').click(function(){
-	var cart = JSON.parse(localStorage.getItem('cart')) || null;
-	if(cart === null){
+	var cart = JSON.parse(localStorage.getItem('cart')) || [];
+	if(cart.length == 0){
 		alert('Вы не добавили товаров в корзину!');
 		return;
 	}
-	data = {form : formData, cart : cart};
+	var dataArr = {model : formData, cart : cart};
 	$.ajax({
         type:'POST',      
         url: url,
-        data: data,
+        data: dataArr,
         success: function(response){
-				alert('Заказ добавлен');
+				alert(response);
 			},
 			error: function(e){
 				console.error(e);
