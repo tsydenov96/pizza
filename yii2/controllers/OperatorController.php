@@ -86,7 +86,7 @@ public function behaviors() {
             //$model->save();
            //$bc = Yii::$app->request->post('cart');
             //$_SESSION['drisny_1'] = $model;
-            $data = $_POST['model']['_csrf'];
+            $data = Yii::$app->request->post();
             $_SESSION['ae'] = $data;
             return "Зашел";
             //$_SESSION['drisny_2'] = $bc;

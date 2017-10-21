@@ -20,23 +20,13 @@ $this->title = 'Pizza store';
                 <div class="col-md-4">
                     <img src="<?='/yii2/upload/'.$goods->goods_img?>" width="300" height="250" class="img-rounded" alt="<?= $goods->goods_name?>">
                     <br>
-                    <div id="txt">
-                        <h4><?= Html::encode ("{$goods->goods_name}") ?></h4>
-                        <h4><?= Html::encode ("{$goods->goods_price}") ?></h4>
-                    </div>
+                    <h4><?= Html::encode ("{$goods->goods_name}") ?></h4>
+                    <h4><?= Html::encode ("{$goods->goods_price}") ?></h4>
                     <form action="index.php?r=site/choose-goods" method="POST">
                         <input type="hidden" name="goods_id" value="<?=$goods->goods_id;?>">
                         <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
-                        <button type="button" class="btn-add" id="<?=$goods->goods_id?>">В корзину</button>
+                        <button type="button" class="btn-add btn btn-info" id="<?=$goods->goods_id;?>">В корзину</button>
                     </form>
-                    <script type="text/javascript">
-                        $(document).ready(function(){
-                            $('#<?=$goods->goods_id?>').click(function() {
-                                $('#txt').css('color', 'green');
-                            })
-                        });
-                    </script>
-
                 </div>
 
             <?php

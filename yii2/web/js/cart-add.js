@@ -9,11 +9,16 @@ $(document).ready(function(){
 			type: 'POST',
 			data: {id: id, _csrf: _csrf},
 			success: function(response){
-				alert('Добавил!');
+				//alert('Добавил!');
 			},
 			error: function(e){
 				console.error(e);
 			}
 		})
+	})
+	$('.btn-add').click(function(){
+		var id = $(this).attr('id');
+		$('#'+id).removeClass('btn-info');
+		$('#'+id).addClass('btn-success');
 	})
 });

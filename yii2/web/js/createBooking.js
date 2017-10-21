@@ -1,7 +1,7 @@
 "use strict";
 
 $(document).ready(function(){
-var formData;
+var form;
 var url;
 if(window.date.goods !== undefined){
 	localStorage.setItem('cart', JSON.stringify(window.date.goods));
@@ -9,8 +9,8 @@ if(window.date.goods !== undefined){
 show(JSON.parse(localStorage.getItem('cart')) || []);
 //отправка первой формы
 $('form').on('beforeSubmit', function(e) {
-    var form = $(this);
-    formData = form.serialize();
+    form = $(this);
+    //formData = form.serialize();
     url = $(this).closest('form').attr('action');
     form.yiiActiveForm('data').validated = false;
 	nextToSecondScreen();
@@ -45,11 +45,22 @@ $('#accept').click(function(){
 		alert('Вы не добавили товаров в корзину!');
 		return;
 	}
-	var dataArr = {model : formData, cart : cart};
+	var formData = form.serialize();
+	var dataArr = {
+		'cart': cart, 
+		'model': formData,
+		'1': {
+			'_sdgg': '122344dasf',
+			'model': {
+				'gghh': 'gfhhh',
+				'dfsf': 'dsfg'
+			}
+		}
+	};
 	$.ajax({
         type:'POST',      
         url: url,
-        data: dataArr,
+        data: {cart},
         success: function(response){
 				alert(response);
 			},
