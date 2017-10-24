@@ -192,4 +192,5 @@ $ar = array();
      echo json_encode(['goods' => $ar]);
   ?>;
 </script>
+<script src="js/qs.js" defer></script>
 <script src="js/createBooking.js" defer></script> 

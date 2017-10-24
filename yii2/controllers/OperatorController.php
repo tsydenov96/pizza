@@ -68,9 +68,7 @@ public function behaviors() {
     public function actionCreate(){
         $model = new Booking();
         $goods = Goods::find()->where(['goods_status' => 1])->all();
-         //unset($_SESSION['ae']);
-         //unset($_SESSION['drisny_1']);
-        if (Yii::$app->request->isAjax/*&&$model->load(Yii::$app->request->post())*/)
+        if (Yii::$app->request->isAjax&&$model->load(Yii::$app->request->post('model')))
         {
             if(isset($_SESSION['status'])){
                 switch ($_SESSION['status']) {
@@ -83,23 +81,17 @@ public function behaviors() {
             if($model->booking_status != 2)
                 $model->booking_status = 1;
             $model->booking_date = date('Y-m-d H:i:s');
-            //$model->save();
-           //$bc = Yii::$app->request->post('cart');
-            //$_SESSION['drisny_1'] = $model;
-            $data = Yii::$app->request->post();
-            $_SESSION['ae'] = $data;
+            $model->save();
+            $bc = Yii::$app->request->post('cart');
+            foreach($bc as $key)
+                for($i = 0; $i < $key['count']; $i++){   
+                    $bookingCon = new BookingConnect();
+                    $bookingCon->booking_id = $model->booking_id;   
+                    $bookingCon->goods_id = $key['id'];
+                    $bookingCon->booking_connect_status = 1;
+                    $bookingCon->save();
+            }
             return "Зашел";
-            //$_SESSION['drisny_2'] = $bc;
-            // exit();
-            // for($i = 0; $i<count($_SESSION['id']);$i++){
-            //     for($j = 0; $j < $_SESSION['id'][$i]->count;$j++){
-            //         $bookingCon = new BookingConnect();
-            //         $bookingCon->booking_id = $model->booking_id;   
-            //         $bookingCon->goods_id = $_SESSION['id'][$i]->id;
-            //         $bookingCon->booking_connect_status = 1;
-            //         $bookingCon->save();
-            //     }
-            // }
         }
         return $this->render('create',['model' => $model, 'goods' => $goods, 'account' => []]);
     }

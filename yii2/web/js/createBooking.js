@@ -1,5 +1,7 @@
 "use strict";
 
+
+
 $(document).ready(function(){
 var form;
 var url;
@@ -48,19 +50,12 @@ $('#accept').click(function(){
 	var formData = form.serialize();
 	var dataArr = {
 		'cart': cart, 
-		'model': formData,
-		'1': {
-			'_sdgg': '122344dasf',
-			'model': {
-				'gghh': 'gfhhh',
-				'dfsf': 'dsfg'
-			}
-		}
+		'model': Qs.parse(formData),
 	};
 	$.ajax({
         type:'POST',      
         url: url,
-        data: {cart},
+        data: dataArr,
         success: function(response){
 				alert(response);
 			},
