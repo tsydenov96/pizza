@@ -65,9 +65,23 @@ public function behaviors() {
         return $this->render('create',['model' => $model,'account' => $account, 'goods' => $goods]);
     }
 
-    public function actionCreate(){
-        $model = new Booking();
-        $goods = Goods::find()->where(['goods_status' => 1])->all();
+    public function actionCreate($id = 0){
+        if($id == 0){
+            $model = new Booking();
+            $goods = Goods::find()->where(['goods_status' => 1])->all();
+            $account = [];
+        }
+        else{
+            $model = $this->findModel($id);
+            $account = (new \yii\db\Query())
+            ->select(['a.goods_id','goods_name', 'COUNT(goods_name) AS count','goods_price'])
+            ->from('pizza_goods AS a')
+            ->join('INNER JOIN','pizza_booking_connect AS b','a.goods_id = b.goods_id')
+            ->where(['b.booking_id' => $model->booking_id])
+            ->groupBy(['goods_name'])
+            ->all();
+            $goods = Goods::find()->where(['goods_status' => 1])->all();
+        }
         if (Yii::$app->request->isAjax&&$model->load(Yii::$app->request->post('model')))
         {
             if(isset($_SESSION['status'])){
@@ -82,18 +96,21 @@ public function behaviors() {
                 $model->booking_status = 1;
             $model->booking_date = date('Y-m-d H:i:s');
             $model->save();
+            $bc_old = BookingConnect::find()->where(['booking_id' => $model->booking_id])->all();
+            $bc_old->delete();
             $bc = Yii::$app->request->post('cart');
-            foreach($bc as $key)
+            foreach($bc as $key){
                 for($i = 0; $i < $key['count']; $i++){   
                     $bookingCon = new BookingConnect();
                     $bookingCon->booking_id = $model->booking_id;   
                     $bookingCon->goods_id = $key['id'];
                     $bookingCon->booking_connect_status = 1;
                     $bookingCon->save();
+                }
             }
             return "Зашел";
         }
-        return $this->render('create',['model' => $model, 'goods' => $goods, 'account' => []]);
+        return $this->render('create',['model' => $model, 'goods' => $goods, 'account' => $account]);
     }
 
     public function actionAccept($id)

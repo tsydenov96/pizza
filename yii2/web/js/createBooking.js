@@ -1,7 +1,5 @@
 "use strict";
 
-
-
 $(document).ready(function(){
 var form;
 var url;
@@ -12,22 +10,9 @@ show(JSON.parse(localStorage.getItem('cart')) || []);
 //отправка первой формы
 $('form').on('beforeSubmit', function(e) {
     form = $(this);
-    //formData = form.serialize();
     url = $(this).closest('form').attr('action');
     form.yiiActiveForm('data').validated = false;
 	nextToSecondScreen();
-   //  $.ajax({
-   //      type:'POST',      
-   //      url: $(this).closest('form').attr('action'),
-   //      data: formData,
-   //      success: function(response){
-			// 	form.yiiActiveForm('data').validated = false;
-			// 	nextToSecondScreen();
-			// },
-			// error: function(e){
-			// 	console.error(e);
-			// }
-   //  });
 }).on('submit', function(e){
     e.preventDefault();
 })
@@ -59,7 +44,7 @@ $('#accept').click(function(){
         success: function(response){
 				alert(response);
 			},
-			error: function(e){
+		error: function(e){
 				console.error(e);
 			}
     });
