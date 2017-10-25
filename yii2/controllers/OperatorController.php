@@ -52,23 +52,9 @@ public function behaviors() {
         ]);
     }
 
-    public function actionView($id){
-        $model = $this->findModel($id);
-        $account = (new \yii\db\Query())
-            ->select(['a.goods_id','goods_name', 'COUNT(goods_name) AS count','goods_price'])
-            ->from('pizza_goods AS a')
-            ->join('INNER JOIN','pizza_booking_connect AS b','a.goods_id = b.goods_id')
-            ->where(['b.booking_id' => $model->booking_id])
-            ->groupBy(['goods_name'])
-            ->all();
-        $goods = Goods::find()->where(['goods_status' => 1])->all();
-        return $this->render('create',['model' => $model,'account' => $account, 'goods' => $goods]);
-    }
-
     public function actionCreate($id = 0){
         if($id == 0){
             $model = new Booking();
-            $goods = Goods::find()->where(['goods_status' => 1])->all();
             $account = [];
         }
         else{
@@ -80,35 +66,30 @@ public function behaviors() {
             ->where(['b.booking_id' => $model->booking_id])
             ->groupBy(['goods_name'])
             ->all();
-            $goods = Goods::find()->where(['goods_status' => 1])->all();
         }
+        $goods = Goods::find()->where(['goods_status' => 1])->all();
         if (Yii::$app->request->isAjax&&$model->load(Yii::$app->request->post('model')))
         {
-            if(isset($_SESSION['status'])){
-                switch ($_SESSION['status']) {
-                    case 'operator':
-                    $model->operator_id=$_SESSION['__id'];
-                    $model->booking_status = 2;
-                    break;
-                }
-            }
-            if($model->booking_status != 2)
-                $model->booking_status = 1;
+            $model->operator_id=$_SESSION['__id'];
+            $model->booking_status = 2;
             $model->booking_date = date('Y-m-d H:i:s');
             $model->save();
             $bc_old = BookingConnect::find()->where(['booking_id' => $model->booking_id])->all();
-            $bc_old->delete();
+            foreach ($bc_old as $key) {
+                $key->delete();
+            }
             $bc = Yii::$app->request->post('cart');
             foreach($bc as $key){
                 for($i = 0; $i < $key['count']; $i++){   
-                    $bookingCon = new BookingConnect();
-                    $bookingCon->booking_id = $model->booking_id;   
-                    $bookingCon->goods_id = $key['id'];
-                    $bookingCon->booking_connect_status = 1;
-                    $bookingCon->save();
+                       $bookingCon = new BookingConnect();
+                       $bookingCon->booking_id = $model->booking_id;   
+                       $bookingCon->goods_id = $key['id'];
+                       $bookingCon->booking_connect_status = 1;
+                       $bookingCon->save();
+                    }
                 }
-            }
-            return "Зашел";
+
+            return $this->redirect(['index']);
         }
         return $this->render('create',['model' => $model, 'goods' => $goods, 'account' => $account]);
     }

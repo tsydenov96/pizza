@@ -41,8 +41,8 @@ $('#accept').click(function(){
         type:'POST',      
         url: url,
         data: dataArr,
-        success: function(response){
-				alert(response);
+        success: function(){
+        		console.log('Добавлено!');
 			},
 		error: function(e){
 				console.error(e);

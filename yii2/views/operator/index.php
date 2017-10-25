@@ -48,7 +48,7 @@ $this->title = Yii::t('app', 'Оператор');
             'class' => 'yii\grid\ActionColumn',
             'controller' => 'operator',
             'header'=>'Действия', 
-            'template' => '{accept} {remove} {view}',
+            'template' => '{accept} {remove} {create}',
             'buttons' => [
                 //     'update' => function ($url,$model) {
                 //     return Html::a(
@@ -61,7 +61,7 @@ $this->title = Yii::t('app', 'Оператор');
                 'remove' => function ($url,$model) {
                     return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url);
                 },
-                'view' => function ($url,$model) {
+                'create' => function ($url,$model) {
                     return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url);
                 },
             ],
